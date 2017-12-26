@@ -8,14 +8,36 @@ import React, { Component } from 'react';
 import { Platform, TouchableOpacity, StyleSheet, Text, View, Image, AppRegistry } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
+const FBSDK = require('react-native-fbsdk');
+const { LoginManager } = FBSDK;
 
 //HOMESCREEN MAIN LOGIN PAGE ->>
 
 class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this._fbAuth = this._fbAuth.bind(this);
+  }
+
   static navigationOptions = {
     title: 'Welcome',
     header: false
   };
+
+  _fbAuth() {
+    LoginManager.logInWithReadPermissions(['public_profile'])
+      .then(result => {
+        if (result.isCancelled) {
+          alert('Login cancelled');
+        } else {
+          this.props.navigation.navigate('MarkingCrush');
+        }
+      })
+      .catch(error => {
+        alert('Login fail with error: ' + error);
+      });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     let bgImag = {
@@ -64,7 +86,7 @@ class HomeScreen extends React.Component {
           </Text>
         </View>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => navigate('MarkingCrush')}>
+          <TouchableOpacity onPress={this._fbAuth}>
             <Image source={fbBtnMain} style={{ height: 50, width: 265, marginTop: 0 }} />
           </TouchableOpacity>
 
