@@ -53,7 +53,7 @@ class HomeScreen extends React.Component {
       uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/Group Login2@3x.png'
     };
     return (
-      <View style={{ flex: 3 }}>
+      <View style={{ flex: 1 }}>
         <Image source={bgImag} style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }} />
         <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
           <Animatable.Image
@@ -487,26 +487,39 @@ class Walkthrough extends React.Component {
 
   _slide1() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#ECF0F1', justifyContent: 'center' }}>
-        <View style={{ flex: 1, alignItems: 'center' }}>
+      <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: '#ECF0F1' }}>
+        <View style={{ height: '18%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
           <Text
             style={{
               color: '#FA8072',
-              marginTop: 30,
-              textAlign: 'center',
+
+              textAlign: 'justify',
               fontSize: 30,
-              fontFamily: 'Norican-Regular'
+              fontFamily: 'Norican-Regular',
+              paddingTop: 15
             }}
           >
             Find My{'\n'} Crush
           </Text>
         </View>
 
-        <View style={{ flex: 5, alignItems: 'flex-end', marginRight: 15 }}>
-          <ImageBackground source={intro1} style={{ height: 447, width: 322, marginTop: 10, borderRadius: 10 }}>
+        <View
+          style={{
+            height: '72%',
+
+            alignItems: 'center',
+
+            overflow: 'hidden'
+          }}
+        >
+          <ImageBackground
+            source={intro1}
+            style={{ height: '100%', width: '100%', borderRadius: 10 }}
+            resizeMode={'contain'}
+          >
             <View
               style={{
-                flex: 2.5,
+                height: '40%',
                 backgroundColor: 'transparent',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -516,14 +529,15 @@ class Walkthrough extends React.Component {
             >
               <Image source={introFb} style={{ height: 72, width: 72 }} />
             </View>
-            <View style={{ flex: 3, backgroundColor: 'transparent', marginRight: 15 }}>
+            <View style={{ height: '60%', backgroundColor: 'transparent', marginRight: 15 }}>
               <Text
                 style={{
                   textAlign: 'center',
                   fontSize: 40,
                   color: 'white',
                   fontFamily: 'Norican-Regular',
-                  lineHeight: 45
+                  lineHeight: 45,
+                  marginTop: 15
                 }}
               >
                 Find My{'\n'} Crush
@@ -549,43 +563,55 @@ class Walkthrough extends React.Component {
 
   _slide2() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#ECF0F1', justifyContent: 'center' }}>
-        <View style={{ flex: 1, alignItems: 'center' }}>
+      <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: '#ECF0F1' }}>
+        <View style={{ height: '18%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
           <Text
             style={{
               color: '#FA8072',
-              marginTop: 30,
-              textAlign: 'center',
+
+              textAlign: 'justify',
               fontSize: 30,
-              fontFamily: 'Norican-Regular'
+              fontFamily: 'Norican-Regular',
+              paddingTop: 15
             }}
           >
             Find My{'\n'} Crush
           </Text>
         </View>
 
-        <View style={{ flex: 5, alignItems: 'flex-end', marginRight: 15 }}>
-          <ImageBackground source={intro2} style={{ height: 447, width: 332, marginTop: 10, borderRadius: 10 }}>
+        <View
+          style={{
+            height: '72%',
+
+            alignItems: 'center',
+
+            overflow: 'hidden'
+          }}
+        >
+          <ImageBackground
+            source={intro2}
+            style={{ height: '100%', width: '100%', borderRadius: 10 }}
+            resizeMode={'contain'}
+          >
             <View
               style={{
-                flex: 2.5,
+                height: '40%',
                 backgroundColor: 'transparent',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop: 40
+                marginTop: 35
               }}
             >
               <Image source={introHeart} style={{ height: 150, width: 150 }} />
             </View>
-            <View style={{ flex: 3.5, backgroundColor: 'transparent' }}>
+            <View style={{ height: '60%', backgroundColor: 'transparent' }}>
               <Text
                 style={{
                   textAlign: 'center',
                   fontSize: 40,
                   color: 'white',
                   fontFamily: 'Norican-Regular',
-                  lineHeight: 45,
-                  marginTop: 10
+                  lineHeight: 45
                 }}
               >
                 Show your{'\n'} Love
@@ -612,23 +638,36 @@ class Walkthrough extends React.Component {
 
   _slide3() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#ECF0F1', justifyContent: 'center' }}>
-        <View style={{ flex: 1, alignItems: 'center' }}>
+      <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: '#ECF0F1' }}>
+        <View style={{ height: '18%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
           <Text
             style={{
               color: '#FA8072',
-              marginTop: 30,
-              textAlign: 'center',
+
+              textAlign: 'justify',
               fontSize: 30,
-              fontFamily: 'Norican-Regular'
+              fontFamily: 'Norican-Regular',
+              paddingTop: 15
             }}
           >
             Find My{'\n'} Crush
           </Text>
         </View>
 
-        <View style={{ flex: 5, alignItems: 'flex-end', marginRight: 30 }}>
-          <ImageBackground source={intro3} style={{ height: 447, width: 326, marginTop: 10, borderRadius: 10 }}>
+        <View
+          style={{
+            height: '72%',
+
+            alignItems: 'center',
+
+            overflow: 'hidden'
+          }}
+        >
+          <ImageBackground
+            source={intro3}
+            style={{ height: '100%', width: '100%', borderRadius: 10 }}
+            resizeMode={'contain'}
+          >
             <View
               style={{
                 flex: 2.5,
