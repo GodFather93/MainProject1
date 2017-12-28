@@ -55,15 +55,16 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Image source={bgImag} style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }} />
-        <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ height: '46.66666%', justifyContent: 'flex-end', alignItems: 'center', overflow: 'hidden' }}>
           <Animatable.Image
             animation="pulse"
             easing="ease-out"
             iterationCount={4}
             source={theHeart}
-            style={{ height: 195, width: 265, marginTop: 150 }}
+            style={{ height: 195, width: 265 }}
           />
-
+        </View>
+        <View style={{ height: '20%', justifyContent: 'center', alignItems: 'center' }}>
           <Text
             style={{
               textAlign: 'center',
@@ -88,10 +89,12 @@ class HomeScreen extends React.Component {
             </Text>
           </Text>
         </View>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity onPress={this._fbAuth}>
-            <Image source={fbBtnMain} style={{ height: 59, width: 306, marginTop: 0, borderRadius: 25 }} />
-          </TouchableOpacity>
+        <View style={{ height: '33.33333%', justifyContent: 'center', alignItems: 'center' }}>
+          <View Style={{ height: '15%', paddingRight: 20, paddingLeft: 20 }}>
+            <TouchableOpacity onPress={() => navigate('MarkingCrush')}>
+              <Image source={fbBtnMain} style={{ height: 59, width: 306, borderRadius: 25 }} />
+            </TouchableOpacity>
+          </View>
 
           <Animatable.Text
             animation="pulse"
@@ -136,7 +139,7 @@ class MarkCrushes extends React.Component {
     };
 
     let HeartBtn = {
-      uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/heart_Button@3x.png'
+      uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/heart_Basdasddnal@3x.png'
     };
 
     let Crushes = {
@@ -149,64 +152,72 @@ class MarkCrushes extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Image source={bgImag} style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }} />
-        <View Style={{ flex: 1, flexDirection: 'column' }}>
+        <View Style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-end' }}>
           <Animatable.Text
             animation="bounceIn"
             iterationCount={1}
             delay={350}
             style={{
               textAlign: 'center',
-              marginTop: 45,
               backgroundColor: 'transparent',
               color: '#FCFCFC',
-              padding: 20,
+              paddingTop: 30,
               fontSize: 30,
-              fontFamily: 'Norican-Regular'
+              fontFamily: 'Norican-Regular',
+              lineHeight: 32
             }}
           >
             Find My {'\n'} Crush
           </Animatable.Text>
         </View>
-        <View style={{ flex: 2, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Image source={profiles} style={{ height: 310, width: 353, marginTop: 10 }} />
 
-          <Text
-            style={{
-              textAlign: 'center',
-              backgroundColor: 'transparent',
-              fontSize: 25,
-              color: '#FCFCFC',
-              paddingTop: 5,
-              fontFamily: 'NunitoSans-Bold'
-            }}
-          >
-            Myrtie Bell
-          </Text>
+        <View style={{ flex: 3, flexDirection: 'column', alignItems: 'center' }}>
+          <View Style={{ flex: 2.5, justifyContent: 'flex-end', overflow: 'hidden' }}>
+            <Image
+              source={profiles}
+              style={{ flex: 0.85, height: 310, width: 353, marginTop: 20 }}
+              resizeMode={'contain'}
+            />
+          </View>
+          <View Style={{ flex: 0.5, justifyContent: 'flex-start' }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                backgroundColor: 'transparent',
+                fontSize: 20,
+                color: '#FCFCFC',
+
+                fontFamily: 'NunitoSans-Bold'
+              }}
+            >
+              Myrtie Bell
+            </Text>
+          </View>
         </View>
 
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-          <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ width: '25%', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => navigate('Profile')}>
-              <Image source={Myprofile} style={{ height: 80, width: 80, marginTop: 10, right: -0 }} />
+              <Image source={Myprofile} style={{ height: 80, width: 80 }} resizeMode={'contain'} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{ width: '25%', alignItems: 'flex-start' }}>
             <TouchableOpacity onPress={this._onPressButton}>
               <Image source={SkipCrushes} style={{ height: 63, width: 70 }} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, justifyContent: 'center' }}>
+          <View style={{ width: '25%', alignItems: 'flex-end' }}>
             <TouchableOpacity onPress={this._onPressButton}>
               <Animatable.Image
                 animation="pulse"
                 easing="ease-in-out-expo"
                 iterationCount="infinite"
                 source={HeartBtn}
-                style={{ height: 100, width: 126 }}
+                style={{ height: 70, width: 70, marginTop: -5 }}
               />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+          <View style={{ width: '25%', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
             <TouchableOpacity onPress={() => navigate('CrushMatches')}>
               <Image source={Crushes} style={{ height: 80, width: 80 }} />
             </TouchableOpacity>
@@ -251,34 +262,39 @@ class MainUserProfile extends React.Component {
       <View style={{ flex: 1 }}>
         <Image source={bgImag} style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }} />
 
-        <View style={{ flex: 2, alignItems: 'center' }}>
-          <Image source={ProfilePic} style={{ height: 160, width: 160, marginTop: 50 }} />
-          <Text
-            style={{
-              backgroundColor: 'transparent',
-              fontSize: 20,
-              color: '#FCFCFC',
-              textAlign: 'center',
-              fontFamily: 'NunitoSans-Bold'
-            }}
-          >
-            kevin Warren
-          </Text>
-          <Animatable.Text
-            animation="pulse"
-            easing="ease-out"
-            iterationCount="infinite"
-            style={{
-              textAlign: 'center',
-              fontSize: 15,
-              marginTop: 15,
-              backgroundColor: 'transparent',
-              color: '#FCFCFC',
-              fontFamily: 'NunitoSans-Bold'
-            }}
-          >
-            INTERESTED IN
-          </Animatable.Text>
+        <View style={{ flex: 3, alignItems: 'center' }}>
+          <View style={{ flex: 2, paddingTop: 25 }}>
+            <Image source={ProfilePic} style={{ height: 160, width: 160 }} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={{
+                backgroundColor: 'transparent',
+                fontSize: 20,
+                color: '#FCFCFC',
+                textAlign: 'center',
+                fontFamily: 'NunitoSans-Bold',
+                marginTop: 5
+              }}
+            >
+              kevin Warren
+            </Text>
+            <Animatable.Text
+              animation="pulse"
+              easing="ease-out"
+              iterationCount="infinite"
+              style={{
+                textAlign: 'center',
+                fontSize: 15,
+                marginTop: 10,
+                backgroundColor: 'transparent',
+                color: '#FCFCFC',
+                fontFamily: 'NunitoSans-Bold'
+              }}
+            >
+              INTERESTED IN
+            </Animatable.Text>
+          </View>
         </View>
 
         <View
@@ -327,17 +343,17 @@ class MainUserProfile extends React.Component {
           >
             30
           </Text>
-          <View style={{ alignItems: 'center', marginTop: 5 }}>
-            <TouchableOpacity onPress={this._onPressButton}>
-              <Animatable.Image
-                animation="pulse"
-                easing="ease-in"
-                iterationCount={5}
-                source={buyNowBtn}
-                style={{ height: 48, width: 200 }}
-              />
-            </TouchableOpacity>
-          </View>
+        </View>
+        <View style={{ alignItems: 'center', marginTop: 5 }}>
+          <TouchableOpacity onPress={this._onPressButton}>
+            <Animatable.Image
+              animation="pulse"
+              easing="ease-in"
+              iterationCount={5}
+              source={buyNowBtn}
+              style={{ height: 48, width: 200 }}
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
