@@ -9,7 +9,7 @@ import { Platform, TouchableOpacity, StyleSheet, Text, View, Image, AppRegistry,
 import { StackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 const FBSDK = require('react-native-fbsdk');
-const { LoginManager } = FBSDK;
+const { LoginManager, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 //HOMESCREEN MAIN LOGIN PAGE ->>
@@ -24,14 +24,16 @@ class HomeScreen extends React.Component {
     title: 'Welcome',
     header: false
   };
-
+  //facebook integration
   _fbAuth() {
     LoginManager.logInWithReadPermissions(['public_profile'])
       .then(result => {
         if (result.isCancelled) {
           alert('Login cancelled');
         } else {
-          this.props.navigation.navigate('MarkingCrush');
+          AccessToken.getCurrentAccessToken().then(data => {
+            this.props.navigation.navigate('MarkingCrush');
+          });
         }
       })
       .catch(error => {
@@ -52,6 +54,7 @@ class HomeScreen extends React.Component {
     let fbBtnMain = {
       uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/Group Login2@3x.png'
     };
+
     return (
       <View style={{ flex: 1 }}>
         <Image source={bgImag} style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }} />
@@ -91,7 +94,7 @@ class HomeScreen extends React.Component {
         </View>
         <View style={{ height: '33.33333%', justifyContent: 'center', alignItems: 'center' }}>
           <View Style={{ height: '15%', paddingRight: 20, paddingLeft: 20 }}>
-            <TouchableOpacity onPress={() => navigate('MarkingCrush')}>
+            <TouchableOpacity onPress={this._fbAuth}>
               <Image source={fbBtnMain} style={{ height: 59, width: 306, borderRadius: 25 }} />
             </TouchableOpacity>
           </View>
@@ -182,6 +185,7 @@ class MarkCrushes extends React.Component {
           <View Style={{ flex: 0.5, justifyContent: 'flex-start' }}>
             <Text
               style={{
+                flex: 0.25,
                 textAlign: 'center',
                 backgroundColor: 'transparent',
                 fontSize: 20,
@@ -198,7 +202,7 @@ class MarkCrushes extends React.Component {
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ width: '25%', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => navigate('Profile')}>
-              <Image source={Myprofile} style={{ height: 80, width: 80 }} resizeMode={'contain'} />
+              <Image source={Myprofile} style={{ height: 80, width: 80 }} />
             </TouchableOpacity>
           </View>
           <View style={{ width: '25%', alignItems: 'flex-start' }}>
