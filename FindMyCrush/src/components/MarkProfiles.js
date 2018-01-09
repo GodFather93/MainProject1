@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
+
 class MarkCrushes extends React.Component {
   static navigationOptions = {
     title: 'MarkCrush',
@@ -16,13 +17,62 @@ class MarkCrushes extends React.Component {
       alert('Error fetching data: ' + error.toString());
     } else {
       const fbData = result.data;
-
-      let counter = fbData[fbData.length - 1];
+      let size = fbData.length;
+      let index = 0;
+      let counter = fbData[index];
       let fname = counter.name;
       let fimage = counter.picture.data.url;
 
-      this.setState({ name: fname, pic: fimage });
+      this.setState({ name: fname, pic: fimage, count: index, dataSize: size });
     }
+  };
+
+  _Yup = () => {
+    const infoRequest = new GraphRequest(
+      '/me/friends?fields=name,picture.height(250).width(250)',
+      null,
+      (_responseInfoCallback = (error, result) => {
+        if (error) {
+          alert('Error fetching data: ' + error.toString());
+        } else {
+          const fbData = result.data;
+          let index = this.state.count + 1;
+
+          let counter = fbData[index];
+          let fname = counter.name;
+          let fimage = counter.picture.data.url;
+
+          this.setState({ name: fname, pic: fimage, count: index });
+        }
+      })
+    );
+    // Start the graph request.
+
+    new GraphRequestManager().addRequest(infoRequest).start();
+  };
+  _Nope = () => {
+    const infoRequest = new GraphRequest(
+      '/me/friends?fields=name,picture.height(250).width(250)',
+      null,
+      (_responseInfoCallback = (error, result) => {
+        if (error) {
+          alert('Error fetching data: ' + error.toString());
+        } else {
+          const fbData = result.data;
+          let index = this.state.count + 1;
+          if (fbData.length > index) {
+            let counter = fbData[index];
+            let fname = counter.name;
+            let fimage = counter.picture.data.url;
+
+            this.setState({ name: fname, pic: fimage, count: index });
+          }
+        }
+      })
+    );
+    // Start the graph request.
+
+    new GraphRequestManager().addRequest(infoRequest).start();
   };
 
   componentWillMount() {
@@ -42,7 +92,9 @@ class MarkCrushes extends React.Component {
     super();
     this.state = {
       name: '',
-      pic: ''
+      pic: '',
+      count: '',
+      dataSize: ''
     };
   }
 
@@ -132,12 +184,12 @@ class MarkCrushes extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={{ width: '25%', alignItems: 'flex-start' }}>
-            <TouchableOpacity onPress={this._onPressButton}>
+            <TouchableOpacity onPress={this._Nope}>
               <Image source={SkipCrushes} style={{ height: 63, width: 70 }} />
             </TouchableOpacity>
           </View>
           <View style={{ width: '25%', alignItems: 'flex-end' }}>
-            <TouchableOpacity onPress={this._onPressButton}>
+            <TouchableOpacity onPress={this._Yup}>
               <Animatable.Image
                 animation="pulse"
                 easing="ease-in-out-expo"
