@@ -11,7 +11,16 @@ class MarkCrushes extends React.Component {
     title: 'MarkCrush',
     header: false
   };
-  //Create response callback.
+
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      pic: '',
+      count: '',
+      dataSize: ''
+    };
+  }
   _responseInfoCallback = (error, result) => {
     if (error) {
       alert('Error fetching data: ' + error.toString());
@@ -37,12 +46,15 @@ class MarkCrushes extends React.Component {
         } else {
           const fbData = result.data;
           let index = this.state.count + 1;
+          if (fbData.length > index) {
+            let counter = fbData[index];
+            let fname = counter.name;
+            let fimage = counter.picture.data.url;
 
-          let counter = fbData[index];
-          let fname = counter.name;
-          let fimage = counter.picture.data.url;
-
-          this.setState({ name: fname, pic: fimage, count: index });
+            this.setState({ name: fname, pic: fimage, count: index });
+          } else {
+            this.setState({ count: index });
+          }
         }
       })
     );
@@ -66,6 +78,8 @@ class MarkCrushes extends React.Component {
             let fimage = counter.picture.data.url;
 
             this.setState({ name: fname, pic: fimage, count: index });
+          } else {
+            this.setState({ count: index });
           }
         }
       })
@@ -88,16 +102,138 @@ class MarkCrushes extends React.Component {
     new GraphRequestManager().addRequest(infoRequest).start();
   }
 
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      pic: '',
-      count: '',
-      dataSize: ''
-    };
+  _renderProfile() {
+    while (this.state.dataSize >= this.state.count) {
+      if (this.state.dataSize <= this.state.count) {
+        {
+          return (
+            <View style={{ flex: 3, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+              <Text
+                style={{
+                  backgroundColor: 'transparent',
+                  fontSize: 20,
+                  color: '#FCFCFC',
+                  textAlign: 'center',
+                  fontFamily: 'NunitoSans-Bold'
+                }}
+              >
+                No More Profiles
+              </Text>
+
+              <TouchableOpacity onPress={this._onPressButton}>
+                <Animatable.Text
+                  animation="pulse"
+                  easing="ease-out"
+                  iterationCount="infinite"
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 15,
+                    marginTop: 25,
+                    backgroundColor: 'transparent',
+                    color: '#FCFCFC',
+                    fontFamily: 'NunitoSans-Bold',
+                    borderRadius: 9,
+                    borderColor: 'white',
+                    borderWidth: 0.5,
+                    padding: 5
+                  }}
+                >
+                  Want Free Credits?
+                </Animatable.Text>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 15,
+                  marginTop: 10,
+                  backgroundColor: 'transparent',
+                  color: '#FCFCFC',
+                  fontFamily: 'NunitoSans-Bold'
+                }}
+              >
+                Invite Your friends by clicking the above button {'\n'} & Earn free credits !!
+              </Text>
+            </View>
+          );
+        }
+      } else {
+        return (
+          <View style={{ flex: 3, alignItems: 'center' }}>
+            <View Style={{ flex: 3, justifyContent: 'flex-end', overflow: 'hidden' }}>
+              <Image
+                source={{ uri: this.state.pic }}
+                style={{
+                  flex: 0.85,
+                  height: 310,
+                  width: 353,
+                  marginTop: 20,
+                  borderRadius: 8
+                }}
+                resizeMode={'contain'}
+              />
+              <Text
+                style={{
+                  flex: 0.25,
+                  textAlign: 'center',
+                  backgroundColor: 'transparent',
+                  fontSize: 20,
+                  color: '#FCFCFC',
+                  marginTop: 10,
+                  fontFamily: 'NunitoSans-Bold'
+                }}
+              >
+                {this.state.name}
+              </Text>
+            </View>
+          </View>
+        );
+      }
+    }
   }
 
+  _DisableBtnNope() {
+    while (this.state.dataSize >= this.state.count) {
+      if (this.state.dataSize <= this.state.count) {
+        {
+          return <View style={{ width: '25%', alignItems: 'flex-start' }} />;
+        }
+      } else {
+        return (
+          <View style={{ width: '25%', alignItems: 'flex-start' }}>
+            <TouchableOpacity onPress={this._Nope}>
+              <Image
+                source={{ uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/heart_break@3x.png' }}
+                style={{ height: 63, width: 70 }}
+              />
+            </TouchableOpacity>
+          </View>
+        );
+      }
+    }
+  }
+  _DisableBtnYup() {
+    while (this.state.dataSize >= this.state.count) {
+      if (this.state.dataSize <= this.state.count) {
+        {
+          return <View style={{ width: '25%', alignItems: 'flex-start' }} />;
+        }
+      } else {
+        return (
+          <View style={{ width: '25%', alignItems: 'flex-end' }}>
+            <TouchableOpacity onPress={this._Yup}>
+              <Animatable.Image
+                animation="pulse"
+                easing="ease-in-out-expo"
+                iterationCount="infinite"
+                source={{ uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/heart_Basdasddnal@3x.png' }}
+                style={{ height: 70, width: 70, marginTop: -5 }}
+              />
+            </TouchableOpacity>
+          </View>
+        );
+      }
+    }
+  }
   render() {
     const { navigate } = this.props.navigation;
     let bgImag = {
@@ -112,16 +248,8 @@ class MarkCrushes extends React.Component {
       uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/ProfileMain@3x.png'
     };
 
-    let HeartBtn = {
-      uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/heart_Basdasddnal@3x.png'
-    };
-
     let Crushes = {
       uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/Crushes@3x.png'
-    };
-
-    let SkipCrushes = {
-      uri: '/Users/melliferalabs/Desktop/project/FindMyCrush/src/images/heart_break@3x.png'
     };
 
     return (
@@ -146,36 +274,7 @@ class MarkCrushes extends React.Component {
           </Animatable.Text>
         </View>
 
-        <View style={{ flex: 3, flexDirection: 'column', alignItems: 'center' }}>
-          <View Style={{ flex: 2.5, justifyContent: 'flex-end', overflow: 'hidden' }}>
-            <Image
-              source={profiles}
-              style={{
-                flex: 0.85,
-                height: 310,
-                width: 353,
-                marginTop: 20,
-                borderRadius: 8
-              }}
-              resizeMode={'contain'}
-            />
-          </View>
-          <View Style={{ flex: 0.5, justifyContent: 'flex-start' }}>
-            <Text
-              style={{
-                flex: 0.25,
-                textAlign: 'center',
-                backgroundColor: 'transparent',
-                fontSize: 20,
-                color: '#FCFCFC',
-
-                fontFamily: 'NunitoSans-Bold'
-              }}
-            >
-              {this.state.name}
-            </Text>
-          </View>
-        </View>
+        {this._renderProfile()}
 
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ width: '25%', alignItems: 'flex-start', justifyContent: 'flex-end' }}>
@@ -183,22 +282,8 @@ class MarkCrushes extends React.Component {
               <Image source={Myprofile} style={{ height: 80, width: 80 }} />
             </TouchableOpacity>
           </View>
-          <View style={{ width: '25%', alignItems: 'flex-start' }}>
-            <TouchableOpacity onPress={this._Nope}>
-              <Image source={SkipCrushes} style={{ height: 63, width: 70 }} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: '25%', alignItems: 'flex-end' }}>
-            <TouchableOpacity onPress={this._Yup}>
-              <Animatable.Image
-                animation="pulse"
-                easing="ease-in-out-expo"
-                iterationCount="infinite"
-                source={HeartBtn}
-                style={{ height: 70, width: 70, marginTop: -5 }}
-              />
-            </TouchableOpacity>
-          </View>
+          {this._DisableBtnNope()}
+          {this._DisableBtnYup()}
           <View style={{ width: '25%', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
             <TouchableOpacity onPress={() => navigate('CrushMatches')}>
               <Image source={Crushes} style={{ height: 80, width: 80 }} />

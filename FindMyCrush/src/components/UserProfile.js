@@ -38,7 +38,8 @@ class MainUserProfile extends React.Component {
     super();
     this.state = {
       name: '',
-      pic: ''
+      pic: '',
+      credits: '30'
     };
   }
 
@@ -156,7 +157,7 @@ class MainUserProfile extends React.Component {
               fontFamily: 'NunitoSans-Bold'
             }}
           >
-            30
+            {this.state.credits}
           </Text>
         </View>
         <View style={{ alignItems: 'center', marginTop: 5 }}>
