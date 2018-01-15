@@ -29,9 +29,10 @@ import MainUserProfile from './src/components/UserProfile.js';
 import Walkthrough from './src/components/Slider.js';
 
 import DummyCrush from './src/components/DummyViewMark.js';
-//HOMESCREEN MAIN LOGIN PAGE ->>
 
-//random comment
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './src/reducers/redIndex.js';
 
 const NavigationApp = StackNavigator(
   {
@@ -49,6 +50,10 @@ const NavigationApp = StackNavigator(
 
 export default class App extends Component {
   render() {
-    return <NavigationApp />;
+    return (
+      <Provider store={createStore(reducers)}>
+        <NavigationApp />
+      </Provider>
+    );
   }
 }

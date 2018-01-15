@@ -5,6 +5,8 @@ import { StackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
+import { connect } from 'react-redux';
+import * as actions from '../actions/actDataSize';
 
 class MainUserProfile extends React.Component {
   static navigationOptions = {
@@ -34,12 +36,12 @@ class MainUserProfile extends React.Component {
     new GraphRequestManager().addRequest(infoRequest).start();
   }
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       name: '',
-      pic: '',
-      credits: '30'
+      pic: ''
     };
   }
 
@@ -157,7 +159,7 @@ class MainUserProfile extends React.Component {
               fontFamily: 'NunitoSans-Bold'
             }}
           >
-            {this.state.credits}
+            {this.props.theCounter}
           </Text>
         </View>
         <View style={{ alignItems: 'center', marginTop: 5 }}>
@@ -189,5 +191,11 @@ class MainUserProfile extends React.Component {
     );
   }
 }
-
-export default MainUserProfile;
+const mapStateToProps = state => {
+  return {
+    theCounter: state.CreditCount,
+    theSize: state.SizeOfData,
+    theIndex: state.IndexCounter
+  };
+};
+export default connect(mapStateToProps, actions)(MainUserProfile);

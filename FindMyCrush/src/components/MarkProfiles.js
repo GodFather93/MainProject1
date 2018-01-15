@@ -5,6 +5,8 @@ import { StackNavigator } from 'react-navigation';
 import * as Animatable from 'react-native-animatable';
 const FBSDK = require('react-native-fbsdk');
 const { LoginManager, AccessToken, GraphRequest, GraphRequestManager } = FBSDK;
+import { connect } from 'react-redux';
+import * as actions from '../actions/actDataSize';
 
 class MarkCrushes extends React.Component {
   static navigationOptions = {
@@ -12,8 +14,10 @@ class MarkCrushes extends React.Component {
     header: false
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.props.setDataSize(0);
+
     this.state = {
       name: '',
       pic: '',
@@ -27,12 +31,19 @@ class MarkCrushes extends React.Component {
     } else {
       const fbData = result.data;
       let size = fbData.length;
+      this.props.setDataSize(size);
       let index = 0;
-      let counter = fbData[index];
-      let fname = counter.name;
-      let fimage = counter.picture.data.url;
+      if (this.props.theSize > this.props.theIndex) {
+        let counter = fbData[this.props.theIndex];
 
-      this.setState({ name: fname, pic: fimage, count: index, dataSize: size });
+        let fname = counter.name;
+
+        let fimage = counter.picture.data.url;
+
+        this.setState({ name: fname, pic: fimage, count: this.props.theIndex, dataSize: size });
+      } else {
+        this.setState({ count: this.props.theIndex });
+      }
     }
   };
 
@@ -40,20 +51,22 @@ class MarkCrushes extends React.Component {
     const infoRequest = new GraphRequest(
       '/me/friends?fields=name,picture.height(250).width(250)',
       null,
-      (_responseInfoCallback = (error, result) => {
+      (_responseCallback = (error, result) => {
         if (error) {
           alert('Error fetching data: ' + error.toString());
         } else {
           const fbData = result.data;
-          let index = this.state.count + 1;
-          if (fbData.length > index) {
-            let counter = fbData[index];
+          let index = this.props.theIndex + 1;
+          this.props.setCounterSize(index);
+          this.props.Yupp(5);
+          if (this.props.theSize > this.props.theIndex) {
+            let counter = fbData[this.props.theIndex];
             let fname = counter.name;
             let fimage = counter.picture.data.url;
 
-            this.setState({ name: fname, pic: fimage, count: index });
+            this.setState({ name: fname, pic: fimage, count: this.props.theIndex });
           } else {
-            this.setState({ count: index });
+            this.setState({ count: this.props.theIndex });
           }
         }
       })
@@ -66,20 +79,21 @@ class MarkCrushes extends React.Component {
     const infoRequest = new GraphRequest(
       '/me/friends?fields=name,picture.height(250).width(250)',
       null,
-      (_responseInfoCallback = (error, result) => {
+      (_responseCallback = (error, result) => {
         if (error) {
           alert('Error fetching data: ' + error.toString());
         } else {
           const fbData = result.data;
-          let index = this.state.count + 1;
-          if (fbData.length > index) {
-            let counter = fbData[index];
+          let index = this.props.theIndex + 1;
+          this.props.setCounterSize(index);
+          if (this.props.theSize > this.props.theIndex) {
+            let counter = fbData[this.props.theIndex];
             let fname = counter.name;
             let fimage = counter.picture.data.url;
 
-            this.setState({ name: fname, pic: fimage, count: index });
+            this.setState({ name: fname, pic: fimage, count: this.props.theIndex });
           } else {
-            this.setState({ count: index });
+            this.setState({ count: this.props.theIndex });
           }
         }
       })
@@ -103,8 +117,8 @@ class MarkCrushes extends React.Component {
   }
 
   _renderProfile() {
-    while (this.state.dataSize >= this.state.count) {
-      if (this.state.dataSize <= this.state.count) {
+    while (this.props.theSize >= this.props.theIndex) {
+      if (this.props.theSize <= this.props.theIndex) {
         {
           return (
             <View style={{ flex: 3, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
@@ -192,8 +206,8 @@ class MarkCrushes extends React.Component {
   }
 
   _DisableBtnNope() {
-    while (this.state.dataSize >= this.state.count) {
-      if (this.state.dataSize <= this.state.count) {
+    while (this.props.theSize >= this.props.theIndex) {
+      if (this.props.theSize <= this.props.theIndex) {
         {
           return <View style={{ width: '25%', alignItems: 'flex-start' }} />;
         }
@@ -212,8 +226,8 @@ class MarkCrushes extends React.Component {
     }
   }
   _DisableBtnYup() {
-    while (this.state.dataSize >= this.state.count) {
-      if (this.state.dataSize <= this.state.count) {
+    while (this.props.theSize >= this.props.theIndex) {
+      if (this.props.theSize <= this.props.theIndex) {
         {
           return <View style={{ width: '25%', alignItems: 'flex-start' }} />;
         }
@@ -294,5 +308,13 @@ class MarkCrushes extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    theCounter: state.CreditCount,
+    theSize: state.SizeOfData,
+    theIndex: state.IndexCounter
+  };
+};
 //MarkCrushes Ends here.. <--
-export default MarkCrushes;
+export default connect(mapStateToProps, actions)(MarkCrushes);
